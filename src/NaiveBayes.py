@@ -1,9 +1,9 @@
 '''
 NaiveBayes Predictor for Loan data.
 Project by-
-Sharath Kumar
-Varun
-Vikas Dayananda - 800969865
+Sharath Kumar 	- 800975820
+Varun Rao		-800959522
+Vikas Dayananda -800969865
 '''
 
 from __future__ import print_function
@@ -18,10 +18,10 @@ from operator import add
 from pyspark import SparkContext
 
 
-count_c = dict()
-prob_c = dict()
+decision_count = dict()
+decision_prob = dict()
 totalRows = 0
-delim = '###'
+DELIM = '###'
 tdict = dict()
 variables = dict()
 variables['term'] = 0
@@ -41,93 +41,107 @@ def classifier(data):
     
     for variable in variables:
         var_prob.append((variable+'='+columns[variables[variable]],1))
-        var_prob.append((variable+'='+columns[variables[variable]]+delim+str(target),1))
+        var_prob.append((variable+'='+columns[variables[variable]]+DELIM+str(target),1))
     return var_prob
 
 def extract(data):
 	columns = data.split(',')
 	target = columns[variables['loan_status']]
 	return target
+def count_Yes(data):
+    columns = data.split(',')
+    target = columns[variables['loan_status']]
+    if target=='Yes':
+		return 1
+    else: 
+		return 0
+def count_No(data):
+    columns = data.split(',')
+    target = columns[variables['loan_status']]
+    if target=='No':
+		return 1
+    else: 
+		return 0
 def count(data):
 	return 1
 def groupTuples(tuples):
-    mydict = dict()
+    temp = dict()
 
     for tuple in tuples:
 		print("i=", tuple)
 		part = tuple[0].split('=')
 		print("i[0]", tuple[0])
 		print("part", part)
-		if  part[0] not in mydict:
+		if  part[0] not in temp:
 			print("part[0]",part[0])
-			mydict[part[0]] = dict()
+			temp[part[0]] = dict()
 		print("part[1]", part[1])
-		values = part[1].split(delim)
+		values = part[1].split(DELIM)
 		
-		if values[0] not in mydict[part[0]]:
-			mydict[part[0]][values[0]] = dict()
+		if values[0] not in temp[part[0]]:
+			temp[part[0]][values[0]] = dict()
 
 		if len(values)==1:
-			values.append('total')
-		mydict[part[0]][values[0]][values[1]] = tuple[1]
+			values.append('count')
+		temp[part[0]][values[0]][values[1]] = tuple[1]
 
-    return mydict
+    return temp
 
 def cleanProb(dict_orig):
     
-    dict0 = dict_orig.copy()
-    targetLevels = len(count_c)
+    temp = dict_orig.copy()
+    targetLevels = len(decision_count)
     
     counter = 0    
-    for item in dict0:
+    for item in temp:
        print ('item ',item)
-       for val in dict0[item]:
+       for val in temp[item]:
 			print ('val' ,val)
-			for tval in count_c:
-				print ('tval' ,tval)
-				if tval not in dict0[item][val]:
-					dict0[item][val][tval] = 0 
+			for val2 in decision_count:
+				print ('val' ,val)
+				if val2 not in temp[item][val]:
+					temp[item][val][val2] = 0 
 					counter += 1
 					print(counter)
 
-    for item in dict0:
-        for val in dict0[item]:
-            for tval in dict0[item][val]:
-                if tval == 'total':
-                    dict0[item][val][tval] += (counter*targetLevels)
+    for item in temp:
+        for val in temp[item]:
+            for val2 in temp[item][val]:
+                if val == 'count':
+                    temp[item][val][val2] += (counter*targetLevels)
                 else:
-                    dict0[item][val][tval] += counter
+                    temp[item][val][val2] += counter
     print (dict_orig)
-    print (dict0)
-    return dict0
+    print (temp)
+    return temp
 
 def predict(row):
     columns = row.split(',')
     
-    probs = dict()
-    for val in prob_c:
-        probs[val] = 1
+    prob = dict()
+    for val in decision_prob:
+        prob[val] = 1
     
     for var in variables:
         if var == 'loan_status':
-            for tval in prob_c:
-                probs[tval] *= prob_c[tval]
+            for val2 in decision_prob:
+                prob[val2] *= decision_prob[val2]
         else:            
-            for tval in prob_c:
-                probs[tval] *= pdict[var][columns[variables[var]]][tval]
+            for val2 in decision_prob:
+                prob[val2] *= pdict[var][columns[variables[var]]][val2]
     
   
     denominator = 0
-    for item in probs:
-        denominator +=  probs[item]
+    for item in prob:
+        denominator +=  prob[item]
     
     greatestClass = -1
-    greatestVal = 0
+    greatesval = 0
     
-    for item in probs:
-        probs[item] /= denominator
-        if probs[item] > greatestVal:
-            greatestVal = probs[item]
+    for item in prob:
+        prob[item] /= denominator
+        if prob[item] > greatesval:
+            greatesval = prob[item]
             greatestClass = item
 
     return greatestClass
@@ -163,41 +177,43 @@ if __name__ == "__main__":
     
     
     for item in groupedRows['loan_status']:
-        count_c[item] = groupedRows['loan_status'][item][item]
+        decision_count[item] = groupedRows['loan_status'][item][item]
 		
    
-    print ('Total Yes count', count_c['Yes'])
-    print ('Total NO count', count_c['No'])
+    print ('Total Yes count', decision_count['Yes'])
+    print ('Total NO count', decision_count['No'])
     
-    for item in count_c:
-        prob_c[item] = float(count_c[item])/float(totalRows)
+    for item in decision_count:
+        decision_prob[item] = float(decision_count[item])/float(totalRows)
 	
-    print ('Prob Yes is', prob_c['Yes'])
-    print ('Prob NO is', prob_c['No'])
+    print ('Prob Yes is', decision_prob['Yes'])
+    print ('Prob NO is', decision_prob['No'])
     
     cleanedgroupedRows = cleanProb(groupedRows)
          
-    #print(count_c)
-    #print(prob_c)
+    #print(decision_count)
+    #print(decision_prob)
     
     pdict = cleanedgroupedRows.copy()
-    cond_probs = dict()
+    cond_prob = dict()
     #print(pdict)
     
 
-    #Calculate conditional probabilities.
+  
     for item in pdict:
         for val in pdict[item]:
             for entry in pdict[item][val]:
-                if entry not in 'total':
-                    pdict[item][val][entry] /= float(count_c[entry])
+                if entry not in 'count':
+                    pdict[item][val][entry] /= float(decision_count[entry])
     print(pdict)
     
     print('Training Complete!!!!!!!')
-    print ('Rows=',totalRows1)
+    print ('Rows=',totalRows)
 
     testFile = sys.argv[2]
     results = sc.textFile(sys.argv[2]).map(lambda x: predict(x))
+    total_Yes=sc.textFile(sys.argv[2]).map(lambda x: count_Yes(x))
+    total_No=sc.textFile(sys.argv[2]).map(lambda x: count_No(x))
     pred_col = sc.textFile(sys.argv[2]).map(lambda x: extract(x))
     print('Predicitons Complete!!!!!')
    
@@ -209,11 +225,17 @@ if __name__ == "__main__":
 	#		approval.append(row[5])
     
     approval=pred_col.collect()
+    yesCounts=sum(total_Yes.collect())
+    noCounts=sum(total_No.collect())
     
     
     print('==================================================================================================================')
     print('Results:')
-    print (sum(1 for a, b in zip(approval, output) if a == b),' of ', len(approval),' are correct')
+    print (sum(1 for a, b in zip(approval, output) if a == b),' of ', len(approval),' predictions are correct')
+    print (sum(1 for a, b in zip(approval, output) if (a == b and a=='Yes')),' of ',yesCounts,' are True Positives')
+    print (sum(1 for a, b in zip(approval, output) if (a == b and a=='No')),' of ',noCounts,' are True Negatives')
+    print (sum(1 for a, b in zip(approval, output) if (a == 'Yes' and b=='No')),'are False Negatives')
+    print (sum(1 for a, b in zip(approval, output) if (a == 'No' and b=='Yes')),'are False Positives')
     print ('Naive Bayes Model Accuracy: ',end='')
     accuracy=float(sum(1 for a, b in zip(approval, output) if a == b))/len(approval)*100
     print(accuracy,'%')
