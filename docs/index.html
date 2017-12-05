@@ -1,37 +1,305 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="manifest" href="site.webmanifest">
-        <link rel="apple-touch-icon" href="icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <link rel="stylesheet" href="css/normalize.css">
+        <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Sniglet" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Flamenco|Sniglet" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <style>
+            body{
+                background: linear-gradient(to bottom, #667eea 0%, #764ba2 100%);
+            }
+            .title{
+                background: linear-gradient(to bottom, #93a5cf 0%, #e4efe9 100%);
+            }
+            p {
+                font-family: 'PT Sans', sans-serif;
+                text-align: justify;
+                text-justify: inter-word;
+                font-size: 20px;
+            }
+            a{
+                text-decoration:none;
+            }
+        </style>
+    <title>
+        Classification of Loan Defaulters using Machine Learning Techniques
+    </title>
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+    <div style="background-color:ghostwhite;padding-left: 20px;padding-right: 20px;margin-left: 10%;margin-right: 10%">
+        <div  class="title">
+    <h1 align="center" style="font-family: 'Bree Serif', serif;"> Classification of Loan Defaulters using Machine Learning Techniques</h1>
+        <hr/></div>
+    <div align="center">
+        <span style="font-size: 20px"><b>By: Vikas Dayananda, Sharath Kumar, Varun Rao</b></span>
+    <br/>
+        <br/>
+    </div>
+    <div style="font-size:20px;background-color:#e9f4f0;width: 300px;font-family: 'Ubuntu', serif;">
+       <b><h4 align="center">Table of Contents</h4></b>
+        <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#moti">Motivation</a></li>
+        <li><a href="#data">Dataset</a></li>
+            <ul>
+                <li><a href="#dc">Data Collection</a></li>
+                <li><a href="#dp">Data Prepration</a></li>
+            </ul>
+        <li><a href="#method">Methods</a></li>
+            <ul>
+                <li><a href="#nb">Naive Bayes</a></li>
+                <li><a href="#knn">K- Nearest Neighbour</a></li>
+            </ul>
+            <li><a href="#eval">Execution</a></li>
+        <li><a href="#eval">Evaluation</a></li>
+            <ul>
+                <li><a href="#r1">Naive Bayes</a></li>
+                <li><a href="#r2">K- Nearest Neighbour</a></li>
+                <li><a href="#r3">Comparison</a></li>
+            </ul>
+        <li><a href="#con">Conclusion</a></li>
+    </ol>
+    </div>
+    <hr/>
+    <div>
+        <h2><a name="intro">Introduction</a></h2>
+        <p>
+            The idea behind this project is to build models for Loan Data provided by
+            Lending Club that summaries a large amount of it's customers data to give an
+            overview of the trend of default status among customers who have taken a loan there.
+            We are building a Naive Bayes and a K-Nearest Neighbor Classification model to classify the
+            customers into "Defaulted" and "Not Defaulted" status.<br/><br/>
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
-        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <span>The main task involved in this project are a follows:</span>
+    <ol style="font-size: 20px">
+        <li>Data Cleaning</li>
+        <li>Missing value imputations</li>
+        <li>Model building </li>
+        <li>Split the data into training and test sets.</li>
+        <li>Train the model based on the training set.</li>
+        <li>Predict loan status for the entire test set.</li>
+        <li>Calculate the model accuracy.</li>
+    </ol>
+        </p>
+    </div>
+    <hr/>
+    <div>
+    <h2><a name="moti">Motivation</a></h2>
+    <p>
+        Lending Club is the world's largest online marketplace connecting borrowers and investors.
+        Lending Club helps to make credit more affordable and investing more rewarding.
+        They operate at a lower cost than traditional bank lending programs and pass the savings on to
+        borrowers in the form of lower rates and to investors in the form of solid returns.
+    </p>
+    <p>
+        Any person who wants to provide loan for some interest can advertize to provide loan at a particular interest rate. Similarly, anyone who intends to borrow loan would advertize to get loan at his desired interest rate. Lending club tries to match these loan investors and loan borrowers.
+    </p>
+    <p>
+        The idea of being able to predict whether a customer would default on his loan or not, even before he is sanctioned a loan is an exciting one. This approach is also of utmost importance to any financial institution. Although, the models we build might not be perfect, it will help the institution and give them an idea of what to expect from a customer. The data we have collected might be from Lending Club, but this solution can be applied to any financial service, which makes this project even more useful and important.
+    </p>
+    <p>
+        The direct applicability of this model to real world problems in banking and financial firms makes this an interesting and cool project to work on. Also, so far we have only imported libraries to build models in R, Python and hence implementing from scratch will be a challenge.
+    </p>
+    </div><hr/>
+        <div>
+        <h2><a name="data">Dataset</a></h2>
+        <h3><a name="dc">Dataset Collection</a></h3>
+    <p>
+        We used the loan data provided by Lending Club on Kaggle website.
+        The files that we downloaded contain complete loan data for all loans issued
+        to the customers through the 2007-2015, including the current loan status which
+        is our predictor variable. The file is in the csv format and has a size of about 1 GB.
+        It is a matrix of about 890 thousand observations and 75 variables. The data dictionary
+        was provided along with the data which helped us understand the different variables involved.
+        As every column is not necessary for the prediction, we chose only few of the most important
+        numerical columns to predict the target variable. As mentioned above, our predictor variable is
+        "loan_status" which has the details of open, currently running and closed loans indicating whether
+        a person has defaulted on the loan taken or not. And our purpose is to build models to accurately predict
+        this classification.
+    </p>
 
-        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-        <script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-        </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    <h3><a name="dp">Dataset Preparation</a></h3>
+    <table class="table-fill">
+        <thead>
+        <tr>
+            <th class="text-left">Features</th>
+            <th class="text-left">Description</th>
+        </tr>
+        <thead>
+
+        <tbody class="table-hover">
+        <tr>
+           <td class="text-left">Int_rate</td>
+            <td class="text-left">Interest Rate on the loan (Numeric)</td>
+        </tr>
+        <tr>
+            <td class="text-left">Loan_amt</td>
+            <td class="text-left">Amount of loan taken by the customer(Numeric)</td>
+        </tr>
+        <tr>
+            <td class="text-left">Annual_inc	</td>
+            <td class="text-left">Annual income of the customer(Numeric)</td>
+        </tr>
+        <tr>
+            <td class="text-left">Open_acc	</td>
+            <td class="text-left">Open credit lines in the customer's account(Numeric)</td>
+        </tr>
+        <tr>
+            <td class="text-left">Revol_bal</td>
+            <td class="text-left">Credit revoke balance</td>
+        </tr>
+        <tr>
+            <td class="text-left">Total_acc</td>
+            <td class="text-left">Total number of credit accounts under the customer's name</td>
+        </tr>
+        <tr>
+            <td class="text-left">Revol_util	</td>
+            <td class="text-left">Amount of credit the customer is using relative to all relative accounts</td>
+        </tr>
+        <tr>
+            <td class="text-left">Delinq_amnt</td>
+            <td class="text-left">Past-due amount owned on the accounts</td>
+        </tr>
+        <tr>
+            <td class="text-left">Dti</td>
+            <td class="text-left">Ratio of the customer's total monthly debt payments divided by his/her self-reported monthly income</td>
+        </tr>
+    </tbody>
+
+    </table>
+        </div><hr/>
+    <div>
+    <h2><a name="method">Methods</a></h2>
+    <h3><a name="nb">Naive Bayes Classifier</a></h3>
+    <p>Naïve Bayes classification is a supervised machine learning classifier which works on the principle of Bayes Theorem.
+        The Naive Bayes algorithm is called "naive" because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features. We find the probabilities of each feature values for a class and multiply all the probabilities. This product is multiplied with the probability of the class. Which class gives a higher probability that class would be given to the corresponding data.
+    </p>
+        <div style="text-align:center;">
+    <img src="img/1.png" align="center" alt="Naive bayes formula"\><br/>
+        </div>
+    <p style="text-align:left;">
+        <ul style=" display:table; margin:0 auto;width:600px;">
+        <li>P(A|B): Probability (conditional probability) of occurrence of event    given the event   is true</li>
+        <li>P(A) and P(B): Probabilities of the occurrence of event   and   respectively</li>
+        <li>P(B|A): Probability of the occurrence of event    given the event   is true</li>
+    </ul>
+        <br/>
+    <span  style=" display:table; margin:0 auto;">The terminology in the Bayesian method of probability is as follows:</span>
+    <ul  style=" display:table; margin:0 auto;width:600px ">
+        <li>A is called the proposition and   is called the evidence./li>
+        <li>P(A) is called the prior probability of proposition and P(B) is called the prior probability of evidence.</li>
+        <li>P(A|B) is called the posterior probability</li>
+        <li>P(B|A) is the likelihood</li>
+    </ul>
+        </p>
+    <span  style=" display:table; margin:0 auto;">This sums the Bayes' theorem as: </span><br/><br/>
+        <div style="text-align:center;">
+    <img src="img/2.png" alt="Naive bayes formula"\>
+
+        </div>
+        <br/>
+    <h3>Naive Bayes Classifier - Algorithm</h3>
+    <p>Naive Bayes algorithm is the algorithm that learns the probability of an object with certain features belonging to a particular group/class.</p>
+    <span style="font-size: 20px"> Training Phase:</span>
+    <p>Given a training set S of F features and L classes,<br/>
+        For each target value ci (c1, c2, c3,..., cL)<br/>
+        P ̂(ci) = estimate P(ci) with examples in S;<br/>
+        For every feature value xjk of each feature xj (j=1,..., F; k=1,...,N)<br/>
+        P ̂(xj = xjk|ci) = estimate P(xjk|ci) with examples in S;<br/>
+        Output F*L gives the conditional probabilistic models.<br/>
+        </p>
+    <span style="font-size: 20px"> Test Phase:</span>
+    <p>Given an unknown instance x'=(a'1,..., a'n) "Look up table" to assign label c* for x' if:<br/>
+        <div style="text-align:center;">
+        <img src="img/3.png" alt="Naive bayes formula"</p>
+    </div>
+    <div>
+    <h3>Features Used from the Data Set: </h3>
+    <p>We selected numerical variables only as features for both the algorithms as K-Nearest Neighbor classifier can handle numerical variables only, we selected only numerical variables from our data set. We selected below features as inputs to our K-Nearest Neighbor model:</p>
+    <table class="table-fill">
+        <thead>
+        <tr>
+            <th class="text-left">Attributes</th>
+            <th class="text-left">Description</th>
+        </tr>
+        <thead>
+
+        <tbody class="table-hover">
+        <tr>
+            <td class="text-left">emp_length</td>
+            <td class="text-left">Employment length in years. Possible values are between 0 and 10 where 0 means less than a year and 10 means 10 or more years</td>
+        </tr>
+        <tr>
+            <td class="text-left">grade</td>
+            <td class="text-left">Loan grade: A,B,C,D</td>
+        </tr>
+        <tr>
+            <td class="text-left">home_ownership	</td>
+            <td class="text-left">The home ownership status provided by borrower during registration or obtained from credit report. It can be : RENT, OWN, MORTGAGE, OTHER</td>
+        </tr>
+        <tr>
+            <td class="text-left">initial_list_status	</td>
+            <td class="text-left">The initial listing status of the loan. It can be : W or F</td>
+        </tr>
+        <tr>
+            <td class="text-left">term</td>
+            <td class="text-left">The number of payments of the loan. Values are in months and can be either 36 or 60.</td>
+        </tr>
+        <tr>
+            <td class="text-left">verification_status</td>
+            <td class="text-left">Indicate's if income is verified or not verified by LC.</td>
+        </tr>
+
+        </tbody>
+    </table>
+    </div>
+    <div>
+
+        <h3><a name="knn">KNN</a></h3>
+        <p>The KNN algorithm is a robust and versatile classifier that is often used as a benchmark for other more complex classifiers. Despite its simplicity, KNN can outperform more powerful classifiers and is used in a variety of applications such as economic forecasting, data compression and genetics. For example, KNN was leveraged in a 2006 study of functional genomics for the assignment of genes based on their expression profiles.</p>
+        <p>KNN falls in the supervised learning family of algorithms. Informally, this means that we are given a labelled dataset consiting of training observations (x,y) where x denotes a feature and y denotes the target variable we are trying to predict.</p>
+        <p>We would like to capture the relationship between x and y. More formally, our goal is to learn a function h:X→Y so that given an unseen observation x, h(x) can confidently predict the corresponding output.</p>
+        <p> <span>The KNN classifier is also a non parametric and instance-based learning algorithm.</span>
+        <ul style="text-align:left;width:700px;text-align: justify;
+                text-justify: inter-word;">
+        <li><b><i>Non-parametric</i></b> means it makes no explicit assumptions about the functional form of h, avoiding the dangers of mismodeling the underlying distribution of the data. For example, suppose our data is highly non-Gaussian but the learning model we choose assumes a Gaussian form. In that case, our algorithm would make extremely poor predictions.</li>
+        <li><b><i>Instance-based learning</i></b> means that our algorithm doesn’t explicitly learn a model. Instead, it chooses to memorize the training instances which are subsequently used as "knowledge" for the prediction phase. Concretely, this means that only when a query to our database is made (i.e. when we ask it to predict a label given an input), will the algorithm use the training instances to spit out an answer.</li>
+
+        </ul>
+        </p>
+        <h4><b>How does it work?</b></h4>
+        <p>Let's take a simple case to understand this algorithm. Following is a spread of red circles (RC) and green squares (GS) :</p>
+        <div style="text-align:center;">
+        <img src="img/5.png" alt=""/>
+        </div>
+        <p>You intend to find out the class of the blue star (BS) . BS can either be RC or GS and nothing else. The "K" is KNN algorithm is the nearest neighbors we wish to take vote from. Let's say K = 3. Hence, we will now make a circle with BS as center just as big as to enclose only three datapoints on the plane. Refer to following diagram for more details:</p>
+        <div style="text-align:center;">
+        <img src="img/6.png" alt=""/>
+        </div>
+        <p>The three closest points to BS is all RC. Hence, with good confidence level we can say that the BS should belong to the class RC. Here, the choice became very obvious as all three votes from the closest neighbor went to RC. The choice of the parameter K is very crucial in this algorithm. Next we will understand what are the factors to be considered to conclude the best K.</p>
+        <p>In short, A case is classified by a majority vote of its neighbors, with the case being assigned to the class most common amongst its K nearest neighbors measured by a distance function.</p>
+        <p>We use one of the following distance functions to calculate the distance between two points.</p><br/>
+        <div style="text-align:center;">
+        <img src="img/7.png" alt=""/>
+        </div>
+        <b><h4>How do you choose K?</h4></b>
+        <p>The K in KNN is a hyper-parameter that you, as a designer, must pick in order to get the best possible fit for the data set. Intuitively, you can think of K as controlling the shape of the decision boundary we talked about earlier.</p>
+        <p>When K is small, we are restraining the region of a given prediction and forcing our classifier to be “more blind" to the overall distribution. A small value for K provides the most flexible fit, which will have low bias but high variance. Graphically, our decision boundary will be more jagged.</p>
+        <div style="text-align:center;">
+        <img src="img/8.png" alt=""/>
+        </div>
+        <p>On the other hand, a higher K averages more voters in each prediction and hence is more resilient to outliers. Larger values of K will have smoother decision boundaries which means lower variance but increased bias.</p>
+        <div style="text-align:center;">
+            <img src="img/9.png" alt=""/></div>
+        <p>In general, a large K value is more precise as it reduces the overall noise but there is no guarantee. Cross-validation is another way to retrospectively determine a good K value by using an independent dataset to validate the K value. Historically, the optimal K for most datasets has been between 3-10. That produces much better results than 1NN.</p>
+    </div>
+    </div>
+    <hr/>
+    </div>
     </body>
 </html>
