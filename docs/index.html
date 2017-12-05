@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
+
         <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Sniglet" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -25,6 +26,57 @@
                 text-decoration:none;
             }
         </style>
+        <script type="text/javascript">
+            window.onload = function () {
+                var chart1 = new CanvasJS.Chart("nbchart",
+                    {
+                        title:{
+                            text: "Results of Naive Bayes Classifier"
+                        },
+                        legend: {
+                            maxWidth: 350,
+                            itemWidth: 120
+                        },
+                        data: [
+                            {
+                                type: "pie",
+                                showInLegend: true,
+                                legendText: "{indexLabel}",
+                                dataPoints: [
+                                    { y: 85216, indexLabel: "True predictions" },
+                                    { y: 26146, indexLabel: "False Predictions" },
+                                ]
+                            }
+                        ]
+                    });
+                chart1.render();
+
+
+                var chart2 = new CanvasJS.Chart("knnchart",
+                    {
+                        title:{
+                            text: "Results of K- Nearest Neighbour"
+                        },
+                        legend: {
+                            maxWidth: 350,
+                            itemWidth: 120
+                        },
+                        data: [
+                            {
+                                type: "pie",
+                                showInLegend: true,
+                                legendText: "{indexLabel}",
+                                dataPoints: [
+                                    { y: 89089, indexLabel: "True predictions" },
+                                    { y: 22273, indexLabel: "False Predictions" },
+                                ]
+                            }
+                        ]
+                    });
+                chart2.render();
+            }
+        </script>
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <title>
         Classification of Loan Defaulters using Machine Learning Techniques
     </title>
@@ -298,6 +350,18 @@
             <img src="img/9.png" alt=""/></div>
         <p>In general, a large K value is more precise as it reduces the overall noise but there is no guarantee. Cross-validation is another way to retrospectively determine a good K value by using an independent dataset to validate the K value. Historically, the optimal K for most datasets has been between 3-10. That produces much better results than 1NN.</p>
     </div>
+    </div>
+    <div>
+        <h2><a name="exec">Execution</a></h2>
+        <div style="text-align:center;">
+        <img src="img/nbgif.gif" alt="" width="900px" height="500px"/>
+        </div>
+    </div>
+    <div>
+        <h2><a name="eval">Evaluation</a></h2>
+        <h3><a name="r1">Naive Bayes</a></h3>
+        <div id="nbchart" style="height: 300px; width: 100%;"></div>
+        <div id="knnchart" style="height: 300px; width: 100%;"></div>
     </div>
     <hr/>
     </div>
