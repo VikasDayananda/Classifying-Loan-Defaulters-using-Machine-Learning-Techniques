@@ -74,18 +74,17 @@ def predictTarget(data):
     
     out = dict()
     
-    for d in ordered_dist:
-        if d[1] not in out:
-            out[d[1]] = 0
-    
-        out[d[1]] += 1
+	for d in ordered_dist:
+		if d[1] not in out:
+			out[d[1]] = 0
+		out[d[1]] += 1
         
-   	 gk = -1
+    gk = -1
     gv = 0
     for i in out:
         if out[i] > gv:
             gk = i
-            gv = out[i]
+			gv = out[i]
     
     return gk
 
