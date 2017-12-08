@@ -9,12 +9,19 @@
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <style>
             body{
                 background: linear-gradient(to bottom, #667eea 0%, #764ba2 100%);
             }
             .title{
                 background: linear-gradient(to bottom, #93a5cf 0%, #e4efe9 100%);
+                padding-top:5px;
+            }
+            ol{
+                text-align: justify;
+                text-justify: inter-word;
             }
             p {
                 font-family: 'PT Sans', sans-serif;
@@ -22,8 +29,68 @@
                 text-justify: inter-word;
                 font-size: 20px;
             }
+
             a{
                 text-decoration:none;
+
+            }
+            #wrap{
+                overflow: hidden;
+            }
+            #viky{
+                width: 170px;
+                float:left;
+            }
+            #shar{
+                width: 170px;
+                float:left;
+                overflow: hidden;
+            }
+            #varun{
+                float: left;
+                width: 170px;
+
+            }
+            #wrapper {
+
+
+                overflow: hidden; /* will contain if #first is longer than #second */
+            }
+            #first {
+
+                float:left; /* add this */
+
+            }
+            .image{
+                padding-left: 20px;
+            }
+            #second {
+
+
+                width: 630px;
+                height:445px;
+
+                overflow: hidden; /* if you don't want #second to wrap below #first */
+            }
+            .name{
+                display: table-cell;
+                vertical-align:middle;
+                text-align:center;padding-left:30px;height:30px;font-size:20px;font-family: 'Fjalla One', sans-serif;
+            }
+            .blink {
+                animation-duration: 1s;
+                animation-name: blink;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+                animation-timing-function: ease-in-out;
+            }
+            @keyframes blink {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
             }
         </style>
         <script type="text/javascript">
@@ -67,15 +134,17 @@
                                 showInLegend: true,
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    { y: 89089, indexLabel: "True predictions" },
-                                    { y: 22273, indexLabel: "False Predictions" },
+                                    { y: 83521, indexLabel: "True predictions" },
+                                    { y: 27841, indexLabel: "False Predictions" },
                                 ]
                             }
                         ]
                     });
                 chart2.render();
             }
+
         </script>
+
         <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <title>
         Classification of Loan Defaulters using Machine Learning Techniques
@@ -88,12 +157,15 @@
     <h1 align="center" style="font-family: 'Bree Serif', serif;"> Classification of Loan Defaulters using Machine Learning Techniques</h1>
         <hr/></div>
     <div align="center">
-        <span style="font-size: 20px"><b>By: Vikas Dayananda, Sharath Kumar, Varun Rao</b></span>
-    <br/>
+        <span style="font-size: 20px"><b>By: Vikas Dayananda, Sharath Kumar, Varun Rao</b></span> <br/>
+        <span class="blink"><a style="color:red" href="https://github.com/VikasDayananda/Classifying-Loan-Defaulters-using-Machine-Learning-Techniques" target="_blank">Click here to view project code on GitHub.</a></span>
+
+
         <br/>
     </div>
-    <div style="font-size:20px;background-color:#e9f4f0;width: 300px;font-family: 'Ubuntu', serif;">
-       <b><h4 align="center">Table of Contents</h4></b>
+        <div id="wrapper">
+    <div id="first" style="font-size:20px;background-color:#e9f4f0;width: 300px;font-family: 'Ubuntu', serif;">
+       <b><h4 align="center">List of Contents</h4></b>
         <ol>
         <li><a href="#intro">Introduction</a></li>
         <li><a href="#moti">Motivation</a></li>
@@ -105,7 +177,7 @@
         <li><a href="#method">Methods</a></li>
             <ul>
                 <li><a href="#nb">Naive Bayes</a></li>
-                <li><a href="#knn">K- Nearest Neighbour</a></li>
+                <li><a href="#knn">k- Nearest Neighbour</a></li>
             </ul>
             <li><a href="#eval">Execution</a></li>
         <li><a href="#eval">Evaluation</a></li>
@@ -115,8 +187,32 @@
                 <li><a href="#r3">Comparison</a></li>
             </ul>
         <li><a href="#con">Conclusion</a></li>
+            <li><a href="#ref">References</a></li>
     </ol>
     </div>
+            <div id="second">
+                <p style="text-align:center">Meet the team</p><br/>
+
+             <img class="image" src="img/viky.JPG" width="180px" height="205px"/>
+                  <img  class="image" src="img/sharath.jpg"  width="180px" height="205px" />
+                  <img  class="image" src="img/varun.jpg" width="180px" height="205px" />
+                <div id="wrap">
+                <div id="viky" class="name">Vikas Dayananda</div>
+                <div id="shar" class="name" >Sharath Kumar</div>
+                <div id="varun" class="name" >Varun Rao</div>
+
+
+                </div>
+                <div style=" display: table-cell;
+    vertical-align:middle;
+    text-align:center; width: 650px;
+    height: 100px;font-size: 20px ">
+                    Graduate Students, Department of Computer Science<br/>University of North Carolina at Charlotte<br/>Charlotte, NC USA.
+                </div>
+
+
+            </div>
+        </div>
     <hr/>
     <div>
         <h2><a name="intro">Introduction</a></h2>
@@ -128,14 +224,14 @@
             customers into "Defaulted" and "Not Defaulted" status.<br/><br/>
 
         <span>The main task involved in this project are a follows:</span>
-    <ol style="font-size: 20px">
+    <ol style="font-size: 20px;font-family: 'PT Sans', sans-serif;">
         <li>Data Cleaning</li>
-        <li>Missing value imputations</li>
-        <li>Model building </li>
-        <li>Split the data into training and test sets.</li>
-        <li>Train the model based on the training set.</li>
-        <li>Predict loan status for the entire test set.</li>
-        <li>Calculate the model accuracy.</li>
+        <li> Missing value imputations</li>
+        <li> Split the data into training and test sets.</li>
+        <li> Model building </li>
+        <li> Train the model based on the training set.</li>
+        <li> Predict loan status for the entire test set.</li>
+        <li> Calculate the model accuracy.</li>
     </ol>
         </p>
     </div>
@@ -162,11 +258,11 @@
         <h2><a name="data">Dataset</a></h2>
         <h3><a name="dc">Dataset Collection</a></h3>
     <p>
-        We used the loan data provided by Lending Club on Kaggle website.
+        We used the loan data provided by Lending Club on <a href="https://www.kaggle.com/wendykan/lending-club-loan-data/data" target="_blank">Kaggle website.</a>
         The files that we downloaded contain complete loan data for all loans issued
         to the customers through the 2007-2015, including the current loan status which
         is our predictor variable. The file is in the csv format and has a size of about 1 GB.
-        It is a matrix of about 890 thousand observations and 75 variables. The data dictionary
+        It is a matrix of about 6 lakh observations and 75 variables. The data dictionary
         was provided along with the data which helped us understand the different variables involved.
         As every column is not necessary for the prediction, we chose only few of the most important
         numerical columns to predict the target variable. As mentioned above, our predictor variable is
@@ -176,59 +272,17 @@
     </p>
 
     <h3><a name="dp">Dataset Preparation</a></h3>
-    <table class="table-fill">
-        <thead>
-        <tr>
-            <th class="text-left">Features</th>
-            <th class="text-left">Description</th>
-        </tr>
-        <thead>
+            <p>Not all the variables are used for our prediction.We have used about 7 variables which will be explained later All the observations with missing values have been deleted.
+            </p>
+            <p>Data is divided into training data (80%) and test data(20%). Training data is used to build the model and Test data is used to validate the model. Sample data is shown below</p>
+            <div style="text-align:center;">
+                <img src="img/data.JPG" width="900px" height="400px" alt=""/></div>
 
-        <tbody class="table-hover">
-        <tr>
-           <td class="text-left">Int_rate</td>
-            <td class="text-left">Interest Rate on the loan (Numeric)</td>
-        </tr>
-        <tr>
-            <td class="text-left">Loan_amt</td>
-            <td class="text-left">Amount of loan taken by the customer(Numeric)</td>
-        </tr>
-        <tr>
-            <td class="text-left">Annual_inc	</td>
-            <td class="text-left">Annual income of the customer(Numeric)</td>
-        </tr>
-        <tr>
-            <td class="text-left">Open_acc	</td>
-            <td class="text-left">Open credit lines in the customer's account(Numeric)</td>
-        </tr>
-        <tr>
-            <td class="text-left">Revol_bal</td>
-            <td class="text-left">Credit revoke balance</td>
-        </tr>
-        <tr>
-            <td class="text-left">Total_acc</td>
-            <td class="text-left">Total number of credit accounts under the customer's name</td>
-        </tr>
-        <tr>
-            <td class="text-left">Revol_util	</td>
-            <td class="text-left">Amount of credit the customer is using relative to all relative accounts</td>
-        </tr>
-        <tr>
-            <td class="text-left">Delinq_amnt</td>
-            <td class="text-left">Past-due amount owned on the accounts</td>
-        </tr>
-        <tr>
-            <td class="text-left">Dti</td>
-            <td class="text-left">Ratio of the customer's total monthly debt payments divided by his/her self-reported monthly income</td>
-        </tr>
-    </tbody>
-
-    </table>
         </div><hr/>
     <div>
     <h2><a name="method">Methods</a></h2>
     <h3><a name="nb">Naive Bayes Classifier</a></h3>
-    <p>Naïve Bayes classification is a supervised machine learning classifier which works on the principle of Bayes Theorem.
+    <p>Naive Bayes classification is a supervised machine learning classifier which works on the principle of Bayes Theorem.
         The Naive Bayes algorithm is called "naive" because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features. We find the probabilities of each feature values for a class and multiply all the probabilities. This product is multiplied with the probability of the class. Which class gives a higher probability that class would be given to the corresponding data.
     </p>
         <div style="text-align:center;">
@@ -249,7 +303,7 @@
         <li>P(B|A) is the likelihood</li>
     </ul>
         </p>
-    <span  style=" display:table; margin:0 auto;">This sums the Bayes' theorem as: </span><br/><br/>
+    <p  style=" display:table; margin:0 auto;">This sums the Bayes' theorem as: </p><br/><br/>
         <div style="text-align:center;">
     <img src="img/2.png" alt="Naive bayes formula"\>
 
@@ -259,10 +313,10 @@
     <p>Naive Bayes algorithm is the algorithm that learns the probability of an object with certain features belonging to a particular group/class.</p>
     <span style="font-size: 20px"> Training Phase:</span>
     <p>Given a training set S of F features and L classes,<br/>
-        For each target value ci (c1, c2, c3,..., cL)<br/>
-        P ̂(ci) = estimate P(ci) with examples in S;<br/>
+        For each target value Ci (C1, C2, C3,..., CL)<br/>
+        P(Ci) = estimate P(ci) with examples in S;<br/>
         For every feature value xjk of each feature xj (j=1,..., F; k=1,...,N)<br/>
-        P ̂(xj = xjk|ci) = estimate P(xjk|ci) with examples in S;<br/>
+        P(xj = xjk|ci) = estimate P(xjk|ci) with examples in S;<br/>
         Output F*L gives the conditional probabilistic models.<br/>
         </p>
     <span style="font-size: 20px"> Test Phase:</span>
@@ -272,7 +326,7 @@
     </div>
     <div>
     <h3>Features Used from the Data Set: </h3>
-    <p>We selected numerical variables only as features for both the algorithms as K-Nearest Neighbor classifier can handle numerical variables only, we selected only numerical variables from our data set. We selected below features as inputs to our K-Nearest Neighbor model:</p>
+    <p>We selected only important variables as features for Naive Bayes classifier. Those features are described below:</p>
     <table class="table-fill">
         <thead>
         <tr>
@@ -309,10 +363,13 @@
 
         </tbody>
     </table>
+        <p>Sample of the data used for Naive Bayes classification is shown below</p>
+        <div style="text-align:center;">
+            <img src="img/data_nb.JPG" alt="" width="600px" height="300px"/></div>
     </div>
     <div>
 
-        <h3><a name="knn">KNN</a></h3>
+        <h3><a name="knn"> k- Nearest Neighbour Classifier</a></h3>
         <p>The KNN algorithm is a robust and versatile classifier that is often used as a benchmark for other more complex classifiers. Despite its simplicity, KNN can outperform more powerful classifiers and is used in a variety of applications such as economic forecasting, data compression and genetics. For example, KNN was leveraged in a 2006 study of functional genomics for the assignment of genes based on their expression profiles.</p>
         <p>KNN falls in the supervised learning family of algorithms. Informally, this means that we are given a labelled dataset consiting of training observations (x,y) where x denotes a feature and y denotes the target variable we are trying to predict.</p>
         <p>We would like to capture the relationship between x and y. More formally, our goal is to learn a function h:X→Y so that given an unseen observation x, h(x) can confidently predict the corresponding output.</p>
@@ -323,6 +380,75 @@
         <li><b><i>Instance-based learning</i></b> means that our algorithm doesn’t explicitly learn a model. Instead, it chooses to memorize the training instances which are subsequently used as "knowledge" for the prediction phase. Concretely, this means that only when a query to our database is made (i.e. when we ask it to predict a label given an input), will the algorithm use the training instances to spit out an answer.</li>
 
         </ul>
+        <h4> k- Nearest Neighbour Algorithm</h4>
+        <ol style="font-size: 20px;font-family: 'PT Sans', sans-serif;width:700px">
+            <li>
+                <strong>Handle the training data:</strong> Read in all the rows from the training set.
+            </li>
+            <li>
+               <strong>Determine Similarity:</strong>  Calculate the Euclidean distance between a test instance and all the training instances. The distance is calculated to locate the 'k' most similar instances in the training set for a given member of the test set. (We choose the value of k to be 3,4 and 5 in our project). Calculate the distances only for the independent variables, ignoring the target variable.
+            </li>
+            <li>
+                <strong> Selecting Neighbors:</strong>  After calculating the distances, select a subset (k=3,4,5) with the smallest distance values.
+            </li>
+            <li>
+                <strong> Devise a predicted response based on the neighbors:</strong>  Take the simple majority of the category of nearest neighbors as the prediction value of the query instance.
+            </li>
+
+        </ol>
+        <h3>Features Used from the Data Set: </h3>
+        <p>We selected numerical variables only as features for both the algorithms as K-Nearest Neighbor classifier can handle numerical variables only, we selected only numerical variables from our data set. We selected below features as inputs to our K-Nearest Neighbor model:</p>
+        <table class="table-fill">
+            <thead>
+            <tr>
+                <th class="text-left">Features</th>
+                <th class="text-left">Description</th>
+            </tr>
+            <thead>
+
+            <tbody class="table-hover">
+            <tr>
+                <td class="text-left">Int_rate</td>
+                <td class="text-left">Interest Rate on the loan (Numeric)</td>
+            </tr>
+            <tr>
+                <td class="text-left">Loan_amt</td>
+                <td class="text-left">Amount of loan taken by the customer(Numeric)</td>
+            </tr>
+            <tr>
+                <td class="text-left">Annual_inc	</td>
+                <td class="text-left">Annual income of the customer(Numeric)</td>
+            </tr>
+            <tr>
+                <td class="text-left">Open_acc	</td>
+                <td class="text-left">Open credit lines in the customer's account(Numeric)</td>
+            </tr>
+            <tr>
+                <td class="text-left">Revol_bal</td>
+                <td class="text-left">Credit revoke balance</td>
+            </tr>
+            <tr>
+                <td class="text-left">Total_acc</td>
+                <td class="text-left">Total number of credit accounts under the customer's name</td>
+            </tr>
+            <tr>
+                <td class="text-left">Revol_util	</td>
+                <td class="text-left">Amount of credit the customer is using relative to all relative accounts</td>
+            </tr>
+            <tr>
+                <td class="text-left">Delinq_amnt</td>
+                <td class="text-left">Past-due amount owned on the accounts</td>
+            </tr>
+            <tr>
+                <td class="text-left">Dti</td>
+                <td class="text-left">Ratio of the customer's total monthly debt payments divided by his/her self-reported monthly income</td>
+            </tr>
+            </tbody>
+
+        </table>
+        <p> Sample of the data used for KNN classification is shown below.
+        <div style="text-align:center;">
+            <img src="img/data_knn.JPG" alt=""  width="700px" height="300px"/></div>
         </p>
         <h4><b>How does it work?</b></h4>
         <p>Let's take a simple case to understand this algorithm. Following is a spread of red circles (RC) and green squares (GS) :</p>
@@ -350,20 +476,52 @@
             <img src="img/9.png" alt=""/></div>
         <p>In general, a large K value is more precise as it reduces the overall noise but there is no guarantee. Cross-validation is another way to retrospectively determine a good K value by using an independent dataset to validate the K value. Historically, the optimal K for most datasets has been between 3-10. That produces much better results than 1NN.</p>
     </div>
-    </div>
+    </div><hr/>
     <div>
         <h2><a name="exec">Execution</a></h2>
         <div style="text-align:center;">
         <img src="img/nbgif.gif" alt="" width="900px" height="500px"/>
         </div>
-    </div>
+    </div><hr/>
     <div>
         <h2><a name="eval">Evaluation</a></h2>
         <h3><a name="r1">Naive Bayes</a></h3>
         <div id="nbchart" style="height: 300px; width: 100%;"></div>
+        <h3><a name="r1">K- Nearest Neighbour</a></h3>
         <div id="knnchart" style="height: 300px; width: 100%;"></div>
+        <h3>Comparison</h3>
+        <div style="overflow: hidden;">
+            <div style="float:left;width: 400px;text-align: center;"><h1>Naive Bayes</h1>
+            <p style="font-size: 100px;text-align: center;">78%</p></div>
+            <div id="" style="width: 400px;overflow: hidden;text-align: center"><h1>k-NN</h1>
+        <p style="font-size: 100px;text-align: center;">75%</p></div>
     </div>
+    </div>
+
     <hr/>
+    <div >
+        <h2><a name="con">Conclusion</a></h2>
+            <p>We successfully implemented all the tasks that we had mentioned at the beginning of the project under the "definitely achieve" section.
+                We built a Naive Bayes and a k-Nearest Neighbor model to classify the loan_status in our data. Our models gave decent accuracies of around 75-80%.
+                Naive Bayes models built using Mllib also gave accuracy in the similar range but a bit higher than our model. Although, we are not entirely sure why there
+                is a difference, but we cannot generalize it and say that Mllib works better than our model for every data.
+                As part of the "ideally achieve" section, we were able to build Logistic Regression just using the Python programming language. As we tested it on a smaller
+                dataset we were able to achieve an accuracy of around 70%.
+                This project helped us learn several new things about the Python language, the Spark architecture and helped us gain a better understanding of the Naive Bayes and
+                kNN algorithms.
+            </p>
+    </div>
+
+    <hr/>
+    <div >
+        <h2><a name="ref">References</a></h2>
+        <p>
+        <a href="http://dataaspirant.com/2017/02/06/naive-bayes-classifier-machine-learning/" >http://dataaspirant.com/2017/02/06/naive-bayes-classifier-machine-learning/</a><br/>
+           <a href="http://dataaspirant.com/2017/02/06/naive-bayes-classifier-machine-learning/"> https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/</a><br/>
+        <a href="http://www.saedsayad.com/k_nearest_neighbors.htm"> http://www.saedsayad.com/k_nearest_neighbors.htm</a><br/>
+            <a href="https://www.analyticsvidhya.com/blog/2014/10/introduction-k-neighbours-algorithm-clustering/"> https://www.analyticsvidhya.com/blog/2014/10/introduction-k-neighbours-algorithm-clustering/</a><br/>
+                <a href="https://kevinzakka.github.io/2016/07/13/k-nearest-neighbor/"> https://kevinzakka.github.io/2016/07/13/k-nearest-neighbor/</a><br/>.
+        </p>
     </div>
     </body>
 </html>

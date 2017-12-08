@@ -17,12 +17,18 @@ import csv
 from operator import add
 from pyspark import SparkContext
 
-
+#store decision counts
 decision_count = dict()
+
+#store decision counts
 decision_prob = dict()
+
 totalRows = 0
 DELIM = '###'
 tdict = dict()
+prob = dict()
+
+#List attribute names
 variables = dict()
 variables['term'] = 0
 variables['grade'] = 1
@@ -111,14 +117,13 @@ def cleanProb(dict_orig):
                     temp[item][val][val2] += (counter*targetLevels)
                 else:
                     temp[item][val][val2] += counter
-    print (dict_orig)
-    print (temp)
+   
     return temp
 
 def predict(row):
     columns = row.split(',')
     
-    prob = dict()
+    
     for val in decision_prob:
         prob[val] = 1
     
@@ -126,9 +131,11 @@ def predict(row):
         if var == 'loan_status':
             for val2 in decision_prob:
                 prob[val2] *= decision_prob[val2]
+                print ('Prob of ',val2,' is =',prob[val2])
         else:            
             for val2 in decision_prob:
                 prob[val2] *= pdict[var][columns[variables[var]]][val2]
+                print ('Prob of ',val2,' is =',prob[val2])
     
   
     denominator = 0
@@ -196,7 +203,7 @@ if __name__ == "__main__":
     
     pdict = cleanedgroupedRows.copy()
     cond_prob = dict()
-    #print(pdict)
+    print(pdict)
     
 
   
@@ -215,6 +222,7 @@ if __name__ == "__main__":
     total_Yes=sc.textFile(sys.argv[2]).map(lambda x: count_Yes(x))
     total_No=sc.textFile(sys.argv[2]).map(lambda x: count_No(x))
     pred_col = sc.textFile(sys.argv[2]).map(lambda x: extract(x))
+    print (prob)
     print('Predicitons Complete!!!!!')
    
     output = results.collect()

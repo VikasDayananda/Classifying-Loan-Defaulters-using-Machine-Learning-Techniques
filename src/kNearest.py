@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
-NaiveBayes Predictor for Loan data.
-Project by-
-Sharath Kumar 	- 800975820
-Varun Rao		-800959522
-Vikas Dayananda -800969865
-'''
+"""
+Created on Mon Dec  4 23:02:51 2017
+
+@author: Sharath
+"""
 
 from pyspark import SparkContext
 import sys
@@ -69,7 +67,7 @@ def predictTarget(data):
 
                 dist += (td[key] - float(rows[dataVariable[key]])) ** 2
 
-        distance.append((math.sqrt(dist), rows[td[key]]))
+        distance.append((math.sqrt(dist), td[key]))
 
     ordered_dist = sorted(distance, key=lambda x: x[0])[0:k]
 
@@ -82,13 +80,20 @@ def predictTarget(data):
     
         out[d[1]] += 1
         
-    return out
+   	 gk = -1
+    gv = 0
+    for i in out:
+        if out[i] > gv:
+            gk = i
+            gv = out[i]
+    
+    return gk
 
 if __name__ == "__main__":
 
     # pass the training and test files as arguments
-    trainingFile = sys.argv[2]
-    testFile = sys.argv[3]
+    trainingFile = sys.argv[1]
+    testFile = sys.argv[2]
     
     # initiate a SparkContext
     sc = SparkContext(appName="KNN")
